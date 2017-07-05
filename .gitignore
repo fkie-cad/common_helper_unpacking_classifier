@@ -1,0 +1,12 @@
+__pycache__
+dist
+build
+*.egg-info*
+*.pyc
+*.aux
+*.log
+*.pdf
+*.synctex.gz
+UC-Results
+.project
+.pydevproject
