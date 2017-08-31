@@ -10,3 +10,4 @@ build
 UC-Results
 .project
 .pydevproject
+.cache

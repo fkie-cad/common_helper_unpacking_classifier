@@ -5,7 +5,7 @@ VERSION = "0.3"
 setup(
     name="common_helper_unpacking_classifier",
     version=VERSION,
-    package_dir={'':'src'},
+    package_dir={'': 'src'},
     packages=find_packages('src', exclude=['tests']),
     install_requires=[
         'entropy >= 0.9',
