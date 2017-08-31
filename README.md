@@ -1,4 +1,5 @@
 # Unpacking Classifier
+[![Build Status](https://travis-ci.org/fkie-cad/common_helper_unpacking_classifier.svg?branch=master)](https://travis-ci.org/fkie-cad/common_helper_unpacking_classifier)
 
 Try to guess if unpacking was successfull.
 Check if
