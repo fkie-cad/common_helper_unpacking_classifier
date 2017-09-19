@@ -31,8 +31,8 @@ def is_compressed(raw_data, small_size_threshold=SMALL_SIZE_THRESHOLD, compress_
         else:
             return False
     elif len(raw_data) > very_small_size_threshold:
-        logging.warning("compression classification might be wrong: file is small")
+        logging.debug("compression classification might be wrong: file is small")
         return is_compressed(raw_data, small_size_threshold=very_small_size_threshold, compress_entropy_threshold=compress_entropy_threshold_small_file, classifier=classifier)
     else:
-        logging.warning("could not determine compression: file too small")
+        logging.debug("could not determine compression: file too small")
         return False
