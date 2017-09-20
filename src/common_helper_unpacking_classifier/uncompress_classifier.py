@@ -8,7 +8,7 @@ COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE = 0.65
 
 
 def is_compressed(raw_data, small_size_threshold=SMALL_SIZE_THRESHOLD, compress_entropy_threshold=COMPRESS_ENTROPY_THRESHOLD, very_small_size_threshold=VERY_SMALL_SIZE_THRESHOLD, compress_entropy_threshold_small_file=COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE, classifier=shannon_entropy):
-    """
+    '''
     Try to guess if data is compressed
 
     :param raw_data: input data
@@ -24,15 +24,15 @@ def is_compressed(raw_data, small_size_threshold=SMALL_SIZE_THRESHOLD, compress_
     :param classifier: entropy function to use
     :type: <function>
     :return: bool
-    """
+    '''
     if len(raw_data) > small_size_threshold:
         if classifier(raw_data) > compress_entropy_threshold:
             return True
         else:
             return False
     elif len(raw_data) > very_small_size_threshold:
-        logging.debug("compression classification might be wrong: file is small")
+        logging.debug('compression classification might be wrong: file is small')
         return is_compressed(raw_data, small_size_threshold=very_small_size_threshold, compress_entropy_threshold=compress_entropy_threshold_small_file, classifier=classifier)
     else:
-        logging.debug("could not determine compression: file too small")
+        logging.debug('could not determine compression: file too small')
         return False

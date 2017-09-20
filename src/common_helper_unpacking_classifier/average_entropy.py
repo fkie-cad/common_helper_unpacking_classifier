@@ -13,7 +13,7 @@ BLOCKSIZE = 256
 
 
 def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=shannon_entropy_natano):
-    """
+    '''
     Calculates the average entropy of input_data regarding block_size
 
     :param input_data: input data
@@ -21,7 +21,7 @@ def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=shannon_entro
     :param block_size: shannon block size in bytes
     :type block_size: int
     :return: float
-    """
+    '''
     offset = 0
     entropy_sum = 0
     number_of_blocks = 0
@@ -34,7 +34,7 @@ def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=shannon_entro
     try:
         return entropy_sum / number_of_blocks
     except Exception as e:
-        logging.warning("Could not calculate entropy: {} {}".format(sys.exc_info()[0].__name__, e))
+        logging.warning('Could not calculate entropy: {} {}'.format(sys.exc_info()[0].__name__, e))
         return 0
 
 

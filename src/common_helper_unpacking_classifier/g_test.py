@@ -11,7 +11,7 @@ def g_test(frequencies):
             try:
                 g += frequency * log(frequency / (elements / 256))
             except Exception as e:
-                logging.error("Could not calculate g_test element: {} {}".format(sys.exc_info()[0].__name__, e))
+                logging.error('Could not calculate g_test element: {} {}'.format(sys.exc_info()[0].__name__, e))
         else:
             g += frequency
     return 2 * g
