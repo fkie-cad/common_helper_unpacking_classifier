@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.3'
+VERSION = '0.3.1'
 
 setup(
     name='common_helper_unpacking_classifier',
@@ -8,7 +8,6 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages('src', exclude=['tests']),
     install_requires=[
-        'entropy >= 0.9',
         'common_helper_files >= 0.2'
     ],
     dependency_links=[

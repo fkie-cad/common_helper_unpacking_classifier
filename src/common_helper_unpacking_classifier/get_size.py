@@ -1,10 +1,11 @@
 import logging
 import os
 import sys
-from entropy import shannon_entropy
-from common_helper_files import get_binary_from_file
-from .helper import _calculate_end_of_block
 
+from common_helper_files import get_binary_from_file
+
+from .helper import _calculate_end_of_block
+from .shannon_entropy import normalized_shannon_byte_entropy as entropy
 
 BLOCKSIZE = 4
 PADDING_ENTROPY_THRESHOLD = 0.1
@@ -54,7 +55,7 @@ def get_binary_size_without_padding(data, blocksize=BLOCKSIZE, padding_entropy_t
     offset = 0
     while offset < original_size:
         end_of_block = _calculate_end_of_block(offset, blocksize, original_size)
-        if shannon_entropy(data[offset:end_of_block]) <= padding_entropy_threshold:
+        if entropy(data[offset:end_of_block]) <= padding_entropy_threshold:
             padding_size += blocksize
         offset = end_of_block
     return original_size - padding_size

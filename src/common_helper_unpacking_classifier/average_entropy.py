@@ -1,18 +1,16 @@
 import logging
 import sys
 
-from entropy import shannon_entropy as shannon_entropy_natano
-
 from .chi_square_test import chi_square_test
 from .g_test import g_test
 from .helper import _calculate_end_of_block
-from .shannon_entropy import shannon_entropy_byte
+from .shannon_entropy import shannon_entropy_byte, normalized_shannon_byte_entropy
 
 
 BLOCKSIZE = 256
 
 
-def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=shannon_entropy_natano):
+def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=normalized_shannon_byte_entropy):
     '''
     Calculates the average entropy of input_data regarding block_size
 
@@ -39,7 +37,7 @@ def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=shannon_entro
 
 
 def avg_shannon_entropy(input_data, block_size=BLOCKSIZE):
-    return avg_entropy(input_data, block_size=block_size, entropy_function=shannon_entropy_natano)
+    return avg_entropy(input_data, block_size=block_size, entropy_function=normalized_shannon_byte_entropy)
 
 
 def avg_shannon_entropy_byte(input_data, block_size=BLOCKSIZE):

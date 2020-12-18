@@ -1,5 +1,6 @@
-from entropy import shannon_entropy
 import logging
+
+from .shannon_entropy import normalized_shannon_byte_entropy as entropy
 
 SMALL_SIZE_THRESHOLD = 255
 VERY_SMALL_SIZE_THRESHOLD = 50
@@ -7,7 +8,14 @@ COMPRESS_ENTROPY_THRESHOLD = 0.8
 COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE = 0.65
 
 
-def is_compressed(raw_data, small_size_threshold=SMALL_SIZE_THRESHOLD, compress_entropy_threshold=COMPRESS_ENTROPY_THRESHOLD, very_small_size_threshold=VERY_SMALL_SIZE_THRESHOLD, compress_entropy_threshold_small_file=COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE, classifier=shannon_entropy):
+def is_compressed(
+        raw_data,
+        small_size_threshold=SMALL_SIZE_THRESHOLD,
+        compress_entropy_threshold=COMPRESS_ENTROPY_THRESHOLD,
+        very_small_size_threshold=VERY_SMALL_SIZE_THRESHOLD,
+        compress_entropy_threshold_small_file=COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE,
+        classifier=entropy
+):
     '''
     Try to guess if data is compressed
 
