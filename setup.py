@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.3.1'
+VERSION = '0.3.2'
 
 setup(
     name='common_helper_unpacking_classifier',
@@ -8,10 +8,10 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages('src', exclude=['tests']),
     install_requires=[
-        'common_helper_files >= 0.2'
+        'common_helper_files @ git+https://github.com/fkie-cad/common_helper_files.git@0.2.2#egg=common_helper_files'
     ],
     dependency_links=[
-        'https://github.com/fkie-cad/common_helper_files/tarball/master#egg=common_helper_files-0.2'
+        'git+https://github.com/fkie-cad/common_helper_files.git@0.2.2#egg=common_helper_files'
     ],
     author='Fraunhofer FKIE',
     author_email='peter.weidenbach@fkie.fraunhofer.de',
