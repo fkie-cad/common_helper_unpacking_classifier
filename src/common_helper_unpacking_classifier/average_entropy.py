@@ -1,23 +1,21 @@
 import logging
 import sys
+from typing import Callable
 
-from .chi_square_test import chi_square_test
-from .g_test import g_test
+from entropython import metric_entropy, shannon_entropy
+
 from .helper import _calculate_end_of_block
-from .shannon_entropy import shannon_entropy_byte, normalized_shannon_byte_entropy
-
 
 BLOCKSIZE = 256
 
 
-def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=normalized_shannon_byte_entropy):
+def avg_entropy(input_data: bytes, block_size: int = BLOCKSIZE, entropy_function: Callable = metric_entropy) -> float:
     '''
     Calculates the average entropy of input_data regarding block_size
 
     :param input_data: input data
-    :type file_path: bytes
     :param block_size: shannon block size in bytes
-    :type block_size: int
+    :param entropy_function: the function to use for entropy calculation
     :return: float
     '''
     offset = 0
@@ -31,22 +29,14 @@ def avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=normalized_sh
         number_of_blocks += (len(current_block) / block_size)
     try:
         return entropy_sum / number_of_blocks
-    except Exception as e:
-        logging.warning('Could not calculate entropy: {} {}'.format(sys.exc_info()[0].__name__, e))
-        return 0
+    except Exception as err:
+        logging.warning('Could not calculate entropy: {} {}'.format(sys.exc_info()[0].__name__, err))
+        return 0.0
 
 
 def avg_shannon_entropy(input_data, block_size=BLOCKSIZE):
-    return avg_entropy(input_data, block_size=block_size, entropy_function=normalized_shannon_byte_entropy)
+    return avg_entropy(input_data, block_size=block_size, entropy_function=metric_entropy)
 
 
 def avg_shannon_entropy_byte(input_data, block_size=BLOCKSIZE):
-    return avg_entropy(input_data, block_size=block_size, entropy_function=shannon_entropy_byte)
-
-
-def avg_chi_square_test(input_data, block_size=BLOCKSIZE):
-    return avg_entropy(input_data, block_size=BLOCKSIZE, entropy_function=chi_square_test)
-
-
-def avg_g_test(input_data, block_size=BLOCKSIZE):
-    return avg_entropy(input_data, block_size=block_size, entropy_function=g_test)
+    return avg_entropy(input_data, block_size=block_size, entropy_function=shannon_entropy)

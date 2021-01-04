@@ -3,30 +3,29 @@ import os
 import sys
 
 from common_helper_files import get_binary_from_file
+from entropython import metric_entropy as entropy
 
 from .helper import _calculate_end_of_block
-from .shannon_entropy import normalized_shannon_byte_entropy as entropy
 
 BLOCKSIZE = 4
 PADDING_ENTROPY_THRESHOLD = 0.1
 
 
-def get_file_size(file_path):
+def get_file_size(file_path: str) -> int:
     '''
     Returns the size of file in bytes. Returns zero on error.
 
     :param file_path: path to file
-    :type file_path: str
-    :return: int
+    :return: the size of file as number of bytes
     '''
     try:
         return os.path.getsize(file_path)
-    except Exception as e:
-        logging.error('Could not get file size: {} {}'.format(sys.exc_info()[0].__name__, e))
+    except Exception as err:
+        logging.error('Could not get file size: {} {}'.format(sys.exc_info()[0].__name__, err))
         return 0
 
 
-def get_file_size_without_padding(file_path):
+def get_file_size_without_padding(file_path: str) -> int:
     '''
     Returns the size of file in bytes minus size of padding areas.
 
@@ -38,17 +37,15 @@ def get_file_size_without_padding(file_path):
     return get_binary_size_without_padding(file_data)
 
 
-def get_binary_size_without_padding(data, blocksize=BLOCKSIZE, padding_entropy_threshold=PADDING_ENTROPY_THRESHOLD):
+def get_binary_size_without_padding(data: bytes, blocksize: int = BLOCKSIZE,
+                                    padding_entropy_threshold: float = PADDING_ENTROPY_THRESHOLD) -> int:
     '''
     Returns the size of input_data in bytes minus size of padding areas.
 
     :param data: input data
-    :type data: bytes
     :param blocksize: block-size regarding padding detection
-    :type blocksize: int
     :param padding_entropy_threshold: shannon entropy threshold regarding padding detection
-    :type padding_entropy_threshold: float
-    :return: int
+    :return: the size of input_data without padding
     '''
     original_size = len(data)
     padding_size = 0

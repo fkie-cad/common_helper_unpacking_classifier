@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-VERSION = '0.3.2'
+VERSION = '0.4.0'
 
 setup(
     name='common_helper_unpacking_classifier',
@@ -8,6 +8,7 @@ setup(
     package_dir={'': 'src'},
     packages=find_packages('src', exclude=['tests']),
     install_requires=[
+        'entropython',
         'common_helper_files @ git+https://github.com/fkie-cad/common_helper_files.git@0.2.2#egg=common_helper_files'
     ],
     dependency_links=[

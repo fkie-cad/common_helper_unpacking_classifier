@@ -1,6 +1,7 @@
 import logging
+from typing import Callable
 
-from .shannon_entropy import normalized_shannon_byte_entropy as entropy
+from entropython import metric_entropy as entropy
 
 SMALL_SIZE_THRESHOLD = 255
 VERY_SMALL_SIZE_THRESHOLD = 50
@@ -9,38 +10,32 @@ COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE = 0.65
 
 
 def is_compressed(
-        raw_data,
-        small_size_threshold=SMALL_SIZE_THRESHOLD,
-        compress_entropy_threshold=COMPRESS_ENTROPY_THRESHOLD,
-        very_small_size_threshold=VERY_SMALL_SIZE_THRESHOLD,
-        compress_entropy_threshold_small_file=COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE,
-        classifier=entropy
-):
+    raw_data: bytes,
+    small_size_threshold: int = SMALL_SIZE_THRESHOLD,
+    compress_entropy_threshold: float = COMPRESS_ENTROPY_THRESHOLD,
+    very_small_size_threshold: int = VERY_SMALL_SIZE_THRESHOLD,
+    compress_entropy_threshold_small_file: float = COMPRESS_ENTROPY_THRESHOLD_SMALL_FILE,
+    classifier: Callable = entropy
+) -> bool:
     '''
-    Try to guess if data is compressed
+    Try to guess if the input data is compressed.
 
     :param raw_data: input data
-    :type raw_data: bytes
-    :param small_size_threshold: data smaller this size are classified using compress_entropy_threshold_small_file
-    :type small_size_threshold: int
-    :param compress_entropy_threshold: input data's entropy is above this threshold the data is considered packed
-    :type compress_entropy_threshold: float
-    :param very_small_size_threshold: if input data's size is smaller this threshold result is un-decideable
-    :type very_small_size_threshold: int
-    :param compress_entropy_threshold_small_file: like compress_entropy_threshold but for input data smaller small_size_threshold
-    :type compress_entropy_threshold_small_file: float
+    :param small_size_threshold: input smaller than this size is classified using compress_entropy_threshold_small_file
+    :param compress_entropy_threshold: if input data's entropy is above this threshold, the data is considered packed
+    :param very_small_size_threshold: if input data's size is smaller this threshold result is undecidable
+    :param compress_entropy_threshold_small_file: like compress_entropy_threshold but for input data smaller than
+        small_size_threshold
     :param classifier: entropy function to use
-    :type: <function>
-    :return: bool
+    :return: True if `raw_data` seems to be compressed and False otherwise
     '''
     if len(raw_data) > small_size_threshold:
-        if classifier(raw_data) > compress_entropy_threshold:
-            return True
-        else:
-            return False
-    elif len(raw_data) > very_small_size_threshold:
+        return classifier(raw_data) > compress_entropy_threshold
+    if len(raw_data) > very_small_size_threshold:
         logging.debug('compression classification might be wrong: file is small')
-        return is_compressed(raw_data, small_size_threshold=very_small_size_threshold, compress_entropy_threshold=compress_entropy_threshold_small_file, classifier=classifier)
-    else:
-        logging.debug('could not determine compression: file too small')
-        return False
+        return is_compressed(
+            raw_data, small_size_threshold=very_small_size_threshold,
+            compress_entropy_threshold=compress_entropy_threshold_small_file, classifier=classifier
+        )
+    logging.debug('could not determine compression: file too small')
+    return False
