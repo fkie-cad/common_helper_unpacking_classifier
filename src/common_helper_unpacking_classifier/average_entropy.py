@@ -4,7 +4,6 @@ from typing import Callable
 
 from entropython import metric_entropy, shannon_entropy
 
-from .helper import _calculate_end_of_block
 
 BLOCKSIZE = 256
 
@@ -22,10 +21,9 @@ def avg_entropy(input_data: bytes, block_size: int = BLOCKSIZE, entropy_function
     entropy_sum = 0
     number_of_blocks = 0
     while offset < len(input_data):
-        end_of_block = _calculate_end_of_block(offset, block_size, len(input_data))
-        current_block = input_data[offset:end_of_block]
+        current_block = input_data[offset:offset + block_size]
         entropy_sum += entropy_function(current_block) * (len(current_block) / block_size)
-        offset = end_of_block
+        offset += block_size
         number_of_blocks += (len(current_block) / block_size)
     try:
         return entropy_sum / number_of_blocks
