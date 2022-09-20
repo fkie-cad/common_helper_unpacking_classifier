@@ -5,7 +5,7 @@ from typing import Callable
 from entropython import metric_entropy, shannon_entropy
 
 
-BLOCKSIZE = 256
+BLOCKSIZE = 4096
 
 
 def avg_entropy(input_data: bytes, block_size: int = BLOCKSIZE, entropy_function: Callable = metric_entropy) -> float:
