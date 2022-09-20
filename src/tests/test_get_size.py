@@ -13,7 +13,6 @@ class TestGetSize(unittest.TestCase):
 
     def test_get_bin_size_without_padding(self):
         no_padding = b'abcdefgt'
-        self.assertEqual(get_binary_size_without_padding(no_padding), len(no_padding))
-        with_padding = b'abcd' + 4 * b'\x00' + b'abcd'
-        self.assertEqual(len(with_padding), 12)
-        self.assertEqual(get_binary_size_without_padding(with_padding), 8)
+        assert get_binary_size_without_padding(no_padding) == len(no_padding)
+        with_padding = os.urandom(4096) + b'\x00' * 1024 + os.urandom(4096)
+        assert get_binary_size_without_padding(with_padding) == 4096*2

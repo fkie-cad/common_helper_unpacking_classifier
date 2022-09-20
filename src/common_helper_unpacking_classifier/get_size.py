@@ -5,9 +5,8 @@ import sys
 from common_helper_files import get_binary_from_file
 from entropython import metric_entropy as entropy
 
-from .helper import _calculate_end_of_block
 
-BLOCKSIZE = 4
+BLOCKSIZE = 256
 PADDING_ENTROPY_THRESHOLD = 0.1
 
 
@@ -51,8 +50,7 @@ def get_binary_size_without_padding(data: bytes, blocksize: int = BLOCKSIZE,
     padding_size = 0
     offset = 0
     while offset < original_size:
-        end_of_block = _calculate_end_of_block(offset, blocksize, original_size)
-        if entropy(data[offset:end_of_block]) <= padding_entropy_threshold:
+        if entropy(data[offset:offset + blocksize]) <= padding_entropy_threshold:
             padding_size += blocksize
-        offset = end_of_block
+        offset += blocksize
     return original_size - padding_size
