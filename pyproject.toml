@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "common_helper_unpacking_classifier"
+version = "0.4.2"
+description = "Functions that help guessing, if unpacking was successful."
+authors = [
+    { name = "Fraunhofer FKIE", email = "peter.weidenbach@fkie.fraunhofer.de" }
+]
+license = {file = "LICENSE"}
+dependencies = [
+    "entropython",
+    "common_helper_files @ git+https://github.com/fkie-cad/common_helper_files.git@0.2.2#egg=common_helper_files"
+]
+urls = { "Homepage" = "https://www.fkie.fraunhofer.de" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["common_helper_unpacking_classifier"]
+exclude = ["tests"]
