@@ -16,6 +16,11 @@ dependencies = [
 ]
 urls = { "Homepage" = "https://www.fkie.fraunhofer.de" }
 
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
 [tool.setuptools.packages.find]
 where = ["src"]
 include = ["common_helper_unpacking_classifier"]
