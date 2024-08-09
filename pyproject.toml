@@ -11,7 +11,7 @@ authors = [
 ]
 license = {file = "LICENSE"}
 dependencies = [
-    "entropython",
+    "entropython @ git+https://github.com/fkie-cad/entropython.git@v1.1.0",
     "common_helper_files @ git+https://github.com/fkie-cad/common_helper_files.git@0.2.2#egg=common_helper_files"
 ]
 urls = { "Homepage" = "https://www.fkie.fraunhofer.de" }
