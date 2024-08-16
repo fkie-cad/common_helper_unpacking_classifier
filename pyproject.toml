@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "common_helper_unpacking_classifier"
-version = "0.4.5"
+version = "0.5.0"
 description = "Functions that help judge whether unpacking was successful."
 authors = [
     { name = "Fraunhofer FKIE", email = "peter.weidenbach@fkie.fraunhofer.de" }
